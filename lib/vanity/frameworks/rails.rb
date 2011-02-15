@@ -44,7 +44,7 @@ module Vanity
             return @vanity_identity if @vanity_identity
             if symbol && object = send(symbol)
               @vanity_identity = object.id
-            elsif response # everyday use
+            elsif response and not response.is_a?(ActionController::TestResponse) # everyday use
               @vanity_identity = cookies["vanity_id"] || ActiveSupport::SecureRandom.hex(16)
               cookies["vanity_id"] = { :value=>@vanity_identity, :expires=>1.month.from_now }
               @vanity_identity
